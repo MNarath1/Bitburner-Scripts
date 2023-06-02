@@ -67,7 +67,9 @@ export async function main(ns) {
       if(ns.getPurchasedServerCost(attack_memory) > ns.getServerMoneyAvailable("home")) {
       ns.tprint("Cannot buy server with current funds!");
       return;
-    }
+      } else {
+      ns.tprint("Buying server");
+      }
   
     var attack_server = ns.purchaseServer(target_host + "_attack_server", 
     attack_memory);
