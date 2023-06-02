@@ -47,8 +47,8 @@ export async function main(ns) {
     }
   
     if(!ns.hasRootAccess(target_host)) {
+      ns.tprint("Root Priviliges Required.");
       if(ns.getServerNumPortsRequired(target_host) <= current_ports){
-        ns.tprint("Root Priviliges Required.");
         await ns.sleep(500);
         ns.print("Attempting to elevate Priviliges.");
         await ns.sleep(200);
