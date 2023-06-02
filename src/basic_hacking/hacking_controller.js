@@ -7,8 +7,9 @@ export async function main(ns) {
     var securityThresh = ns.args[2] + 5;
     var mem = ns.args[3];
     while(true){
+        ns.killall(ns.getHostname(),true);
         var security_level = ns.getServerSecurityLevel(target);
-        var server_money = ns.getServerMoneyAvailable(target);
+        var server_money = ns.getServerMoneyAvailable(target);  
         if (security_level > securityThresh) {
             const pid = ns.run("basic_hacking/weaken.js", Math.floor(mem/ns.args[4]), target);
             const port = ns.getPortHandle(pid);
