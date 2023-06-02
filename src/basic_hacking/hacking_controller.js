@@ -26,6 +26,10 @@ export async function main(ns) {
             const pid = ns.run("basic_hacking/hack.js", Math.floor(mem/ns.args[6]), target);
             const port = ns.getPortHandle(pid);
             await port.nextWrite();
+            if(port.read <= -1) {
+              port.clear();
+              throw ErrorEvent;
+            }
             port.clear();
           } catch (ErrorEvent) {
             ns.print("Cannot execute hack waiting....");
