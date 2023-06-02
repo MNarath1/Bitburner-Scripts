@@ -80,6 +80,5 @@ export async function main(ns) {
     ns.exec("hack.js",attack_server, threads,
     target_host, 
     ns.getServerMaxMoney(target_host), 
-    ns.getServerMinSecurityLevel(target_host));
-    
+    ns.getServerMinSecurityLevel(target_host)); 
   }
