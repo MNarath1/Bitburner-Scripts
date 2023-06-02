@@ -74,7 +74,8 @@ export async function main(ns) {
     var attack_server = ns.purchaseServer(target_host + "_attack_server", 
     attack_memory);
   
-    var threads = Math.floor((ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server))/ns.getScriptRam("hack.js","home"));
+    var threads = Math.floor(
+    (ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server))/ns.getScriptRam("hack.js","home"));
     ns.scp("hack.js", attack_server, "home");
     ns.exec("hack.js",attack_server, threads,
     target_host, 
