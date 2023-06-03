@@ -63,12 +63,27 @@ export async function main(ns) {
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
-  
-      if(ns.getPurchasedServerCost(attack_memory) > ns.getServerMoneyAvailable("home")) {
+      const server_cost = ns.getPurchasedServerCost(attack_memory);
+      if(server_cost > ns.getServerMoneyAvailable("home")) {
       ns.tprint("Cannot buy server with current funds!");
+      ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
       return;
       } else {
-      ns.tprint("Buying server");
+        var purchaseServers = ns.getPurchasedServers();
+        if(purchaseServers >= ns.getPurchasedServerLimit()) {
+          var min_Server;
+          var min_ram = 2**20;
+          for(var Server in purchaseServers) {
+            var temp_ram = ns.getServerMaxRam(Server);
+            if(temp_ram <= min_ram) {
+              min_ram = temp_ram;
+              min_Server = Server;
+            }
+          }
+          ns.tprint("Deleting smallest Server to free Space!")
+          ns.deleteServer(min_Server);
+          }
+        ns.tprint("Buying server");
       }
   
     const attack_server = ns.purchaseServer(target_host + "_attack_server", 
