@@ -69,6 +69,8 @@ export async function main(ns) {
       ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
       return;
       } else {
+        //comment this out if you need to start with low ram
+        //------------------------------------------------
         var purchaseServers = ns.getPurchasedServers();
         if(purchaseServers >= ns.getPurchasedServerLimit()) {
           var min_Server;
@@ -83,6 +85,7 @@ export async function main(ns) {
           ns.tprint("Deleting smallest Server to free Space!")
           ns.deleteServer(min_Server);
           }
+        //----------------------------------------------------
         ns.tprint("Buying server");
       }
   
