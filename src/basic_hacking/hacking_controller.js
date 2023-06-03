@@ -1,11 +1,11 @@
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
-    var target = ns.args[0];
+    const target = ns.args[0];
     // var moneyThresh = ns.getServerMaxMoney(target) * 0.75;
     // var securityThresh = ns.getServerMinSecurityLevel(target) + 5;
-    var moneyThresh = ns.args[1] * 0.75;
-    var securityThresh = ns.args[2] + 5;
-    var mem = ns.args[3];
+    const moneyThresh = ns.args[1] * 0.75;
+    const securityThresh = ns.args[2] + 5;
+    const mem = ns.args[3];
     while(true){
         ns.killall(ns.getHostname(),true);
         var security_level = ns.getServerSecurityLevel(target);

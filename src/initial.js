@@ -1,7 +1,7 @@
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
-    var target_host = ns.args[0];
-    var attack_memory = ns.args[1];
+    const target_host = ns.args[0];
+    const attack_memory = ns.args[1];
   
     ns.tprint("Starting Attack on Target Server!");
     var current_ports = 0;
@@ -71,10 +71,10 @@ export async function main(ns) {
       ns.tprint("Buying server");
       }
   
-    var attack_server = ns.purchaseServer(target_host + "_attack_server", 
+    const attack_server = ns.purchaseServer(target_host + "_attack_server", 
     attack_memory);
   
-    var mem = (ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server)- ns.getScriptRam("basic_hacking/hacking_controller.js"));
+    const mem = (ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server)- ns.getScriptRam("basic_hacking/hacking_controller.js"));
 
     ns.scp(["basic_hacking/hacking_controller.js", "basic_hacking/hack.js", "basic_hacking/grow.js", "basic_hacking/weaken.js"], attack_server, "home");
 
