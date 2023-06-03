@@ -10,13 +10,13 @@ export async function main(ns) {
         ns.killall(ns.getHostname(),true);
         var security_level = ns.getServerSecurityLevel(target);
         var server_money = ns.getServerMoneyAvailable(target);  
-        if (security_level > securityThresh) {
+        if(security_level > securityThresh) {
             const pid = ns.run("basic_hacking/weaken.js", Math.floor(mem/ns.args[4]), target);
             const port = ns.getPortHandle(pid);
             await port.nextWrite();
             port.clear();
             // const data = port.read() //only needed if you want to grab data otherwise clear the port or so
-        } else if (server_money < moneyThresh) {
+        } else if(server_money < moneyThresh) {
             const pid = ns.run("basic_hacking/grow.js", Math.floor(mem/ns.args[5]), target);
             const port = ns.getPortHandle(pid);
             await port.nextWrite();
