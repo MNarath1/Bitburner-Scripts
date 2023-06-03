@@ -72,18 +72,25 @@ export async function main(ns) {
       }
   
     const attack_server = ns.purchaseServer(target_host + "_attack_server", 
-    attack_memory);
+                                            attack_memory);
   
-    const mem = (ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server)- ns.getScriptRam("basic_hacking/hacking_controller.js"));
+    const mem = (ns.getServerMaxRam(attack_server)
+                - ns.getServerUsedRam(attack_server)
+                - ns.getScriptRam("basic_hacking/hacking_controller.js"));
 
-    ns.scp(["basic_hacking/hacking_controller.js", "basic_hacking/hack.js", "basic_hacking/grow.js", "basic_hacking/weaken.js"], attack_server, "home");
+    ns.scp(["basic_hacking/hacking_controller.js", 
+            "basic_hacking/hack.js", 
+            "basic_hacking/grow.js", 
+            "basic_hacking/weaken.js"], attack_server, "home");
 
-    ns.exec("basic_hacking/hacking_controller.js", attack_server, 1,
-    target_host, 
-    ns.getServerMaxMoney(target_host), 
-    ns.getServerMinSecurityLevel(target_host),
-    mem,
-    ns.getScriptRam("basic_hacking/weaken.js"),
-    ns.getScriptRam("basic_hacking/grow.js"),
-    ns.getScriptRam("basic_hacking/hack.js"));
+    ns.exec("basic_hacking/hacking_controller.js", 
+            attack_server, 
+            1,
+            target_host, 
+            ns.getServerMaxMoney(target_host), 
+            ns.getServerMinSecurityLevel(target_host),
+            mem,
+            ns.getScriptRam("basic_hacking/weaken.js"),
+            ns.getScriptRam("basic_hacking/grow.js"),
+            ns.getScriptRam("basic_hacking/hack.js"));
   }
