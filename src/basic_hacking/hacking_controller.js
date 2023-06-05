@@ -6,6 +6,7 @@ export async function main(ns) {
     const moneyThresh = ns.args[1] * 0.75;
     const securityThresh = ns.args[2] + 5;
     const mem = ns.args[3];
+    ns.disableLog("killall");
     while(true){
         ns.killall(ns.getHostname(),true);
         var security_level = ns.getServerSecurityLevel(target);
