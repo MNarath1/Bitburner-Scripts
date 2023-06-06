@@ -1,4 +1,4 @@
-import { run_worker } from "@/helper_functions/run_worker";
+import { run_worker } from "@/helper_functions/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
