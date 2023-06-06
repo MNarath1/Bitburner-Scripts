@@ -1,3 +1,8 @@
+//libary file for helper functions that can be imported into other scripts
+
+
+
+
 /** @param {import("@ns").NS} ns */
 export async function run_worker(ns, scriptname, threads, target) {
     const pid = ns.run(scriptname, threads, target);
@@ -10,6 +15,7 @@ export async function run_worker(ns, scriptname, threads, target) {
     return port.read();
     
 }
+
 
 /**
  * Deletes smallest bought Server if the max server limit has been reached.
@@ -30,6 +36,7 @@ export function delete_smallest_server(ns) {
       ns.deleteServer(min_Server);
       }
 }
+
 
 /** @param {import("@ns").NS} ns */
 export async function break_ports(ns, target_host) {
@@ -76,6 +83,7 @@ export async function break_ports(ns, target_host) {
     }
     return current_ports;
 }
+
 
 /** 
  * 
