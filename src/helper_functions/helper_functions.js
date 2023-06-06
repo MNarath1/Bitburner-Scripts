@@ -84,6 +84,6 @@ export async function break_ports(ns, target_host) {
  * @param target:String Name of Destination Server
  * 
 */
-export function scp_helpers(ns, target) {
+export function scp_helper(ns, target) {
     ns.scp("helper_functions/helper_functions.js", target);
 }

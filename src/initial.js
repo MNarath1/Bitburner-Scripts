@@ -1,4 +1,4 @@
-import { break_ports, delete_smallest_server } from "./helper_functions/helper_functions";
+import { break_ports, delete_smallest_server, scp_helper } from "./helper_functions/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
@@ -45,6 +45,8 @@ export async function main(ns) {
     const mem = (ns.getServerMaxRam(attack_server)
                 - ns.getServerUsedRam(attack_server)
                 - ns.getScriptRam("basic_hacking/hacking_controller.js"));
+    
+    scp_helper(ns, attack_server);
 
     ns.scp(["basic_hacking/hacking_controller.js", 
             "basic_hacking/hack.js", 
