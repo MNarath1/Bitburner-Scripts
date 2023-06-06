@@ -1,4 +1,5 @@
 import { break_ports } from "./helper_functions/break_ports";
+import { delete_smallest_server } from "./helper_functions/delete_smallest_server";
 import { scp_helpers } from "./helper_functions/scp_helpers";
 
 /** @param {import("@ns").NS} ns */
@@ -35,20 +36,7 @@ export async function main(ns) {
       } else {
         //comment this out if you need to start with low ram
         //------------------------------------------------
-        var purchaseServers = ns.getPurchasedServers();
-        if(purchaseServers >= ns.getPurchasedServerLimit()) {
-          var min_Server;
-          var min_ram = 2**20;
-          for(let Server of purchaseServers) {
-            var temp_ram = ns.getServerMaxRam(Server);
-            if(temp_ram <= min_ram) {
-              min_ram = temp_ram;
-              min_Server = Server;
-            }
-          }
-          ns.tprint("Deleting smallest Server to free Space!")
-          ns.deleteServer(min_Server);
-          }
+        delete_smallest_server(ns);
         //------------------------------------------------
         ns.tprint("Buying server");
       }
