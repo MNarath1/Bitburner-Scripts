@@ -49,7 +49,7 @@ export async function main(ns) {
           ns.tprint("Deleting smallest Server to free Space!")
           ns.deleteServer(min_Server);
           }
-        //----------------------------------------------------
+        //------------------------------------------------
         ns.tprint("Buying server");
       }
   
