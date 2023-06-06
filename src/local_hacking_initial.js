@@ -1,4 +1,4 @@
-import { break_ports } from "./helper_functions/break_ports";
+import { break_ports } from "./helper_functions/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
