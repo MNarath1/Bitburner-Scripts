@@ -26,11 +26,18 @@ export async function main(ns) {
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
-  
-    const mem = (ns.getServerMaxRam(attack_server)
-                - ns.getServerUsedRam(attack_server)
-                - ns.getScriptRam("basic_hacking/hacking_controller.js")
-                - ns.getScriptRam("initial.js"));
+
+    var server_ram = ns.getServerMaxRam(attack_server);
+    var script_ram = ns.getScriptRam("initial.js");
+    if(script_ram >= server_ram) {
+      script_ram = ns.getScriptRam("local_hacking_initial.js");
+    }
+
+    const mem = (server_ram
+      - ns.getServerUsedRam(attack_server)
+      - ns.getScriptRam("basic_hacking/hacking_controller.js")
+      - script_ram);
+    
     ns.tprint("Starting hacking Script on local Machine.");
     ns.run("basic_hacking/hacking_controller.js",
             1,
