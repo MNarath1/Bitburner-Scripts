@@ -75,7 +75,7 @@ export async function main(ns) {
         if(purchaseServers >= ns.getPurchasedServerLimit()) {
           var min_Server;
           var min_ram = 2**20;
-          for(var Server in purchaseServers) {
+          for(let Server of purchaseServers) {
             var temp_ram = ns.getServerMaxRam(Server);
             if(temp_ram <= min_ram) {
               min_ram = temp_ram;
