@@ -1,5 +1,5 @@
 /** @param {import("@ns").NS} ns */
-export async function run_worker(ns, scriptname, threads) {
+export async function run_worker(ns, scriptname, threads, target) {
     const pid = ns.run(scriptname, threads, target);
     const port = ns.getPortHandle(pid);
     await port.nextWrite();
