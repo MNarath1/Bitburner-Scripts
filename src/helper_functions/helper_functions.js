@@ -22,7 +22,7 @@ export async function run_worker(ns, scriptname, threads, target) {
  *  @param {import("@ns").NS} ns */
 export function delete_smallest_server(ns) {
     var purchaseServers = ns.getPurchasedServers();
-    if(purchaseServers >= ns.getPurchasedServerLimit()) {
+    if(purchaseServers.length >= ns.getPurchasedServerLimit()) {
       var min_Server;
       var min_ram = 2**20;
       for(let Server of purchaseServers) {
@@ -33,7 +33,9 @@ export function delete_smallest_server(ns) {
         }
       }
       ns.tprint("Deleting smallest Server to free Space!")
-      ns.deleteServer(min_Server);
+      ns.tprint("Deleting " + min_Server);
+      ns.killall(min_Server);
+      return ns.deleteServer(min_Server);
       }
 }
 
