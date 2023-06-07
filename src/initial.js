@@ -1,3 +1,5 @@
+import { break_ports, delete_smallest_server, scp_helper } from "./helper_functions/helper_functions";
+
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
     const target_host = ns.args[0];
@@ -6,49 +8,10 @@ export async function main(ns) {
     ns.tprint("Starting Attack on Target Server!");
   
     if(!ns.hasRootAccess(target_host)) {
-      var current_ports = 0;
-  
-      if(ns.fileExists("BruteSSH.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-        ns.tprint("Executing SSH Bruteforce Attack.");
-        ns.brutessh(target_host);
-        current_ports++;
-        await ns.sleep(1000);
-        ns.tprint("Success!");
-      }
-    
-      if(ns.fileExists("FTPCrack.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-        ns.tprint("Executing attack on FTP Port.");
-        ns.ftpcrack(target_host);
-        current_ports++;
-        await ns.sleep(1000);
-        ns.tprint("Success!");
-      }
-  
-      if(ns.fileExists("relaySMTP.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-        ns.tprint("Executing attack on SMTP Port.");
-        ns.relaysmtp(target_host);
-        current_ports++;
-        await ns.sleep(1000);
-        ns.tprint("Success!");
-      }
-  
-      if(ns.fileExists("HTTPWorm.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-        ns.tprint("Executing attack on HTTP Port.");
-        ns.httpworm(target_host);
-        current_ports++;
-        await ns.sleep(1000);
-        ns.tprint("Success!");
-      }
-  
-      if(ns.fileExists("SQLInject.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-        ns.tprint("Executing SQL injection attack.");
-        ns.sqlinject(target_host);
-        current_ports++;
-        await ns.sleep(1000);
-        ns.tprint("Success!");
-      }
+      var open_ports = await break_ports(ns, target_host);
+
       ns.tprint("Root Priviliges Required.");
-      if(ns.getServerNumPortsRequired(target_host) <= current_ports){
+      if(ns.getServerNumPortsRequired(target_host) <= open_ports){
         await ns.sleep(500);
         ns.print("Attempting to elevate Priviliges.");
         await ns.sleep(200);
@@ -71,21 +34,8 @@ export async function main(ns) {
       } else {
         //comment this out if you need to start with low ram
         //------------------------------------------------
-        var purchaseServers = ns.getPurchasedServers();
-        if(purchaseServers >= ns.getPurchasedServerLimit()) {
-          var min_Server;
-          var min_ram = 2**20;
-          for(let Server of purchaseServers) {
-            var temp_ram = ns.getServerMaxRam(Server);
-            if(temp_ram <= min_ram) {
-              min_ram = temp_ram;
-              min_Server = Server;
-            }
-          }
-          ns.tprint("Deleting smallest Server to free Space!")
-          ns.deleteServer(min_Server);
-          }
-        //----------------------------------------------------
+        delete_smallest_server(ns);
+        //------------------------------------------------
         ns.tprint("Buying server");
       }
   
@@ -95,6 +45,8 @@ export async function main(ns) {
     const mem = (ns.getServerMaxRam(attack_server)
                 - ns.getServerUsedRam(attack_server)
                 - ns.getScriptRam("basic_hacking/hacking_controller.js"));
+    
+    scp_helper(ns, attack_server);
 
     ns.scp(["basic_hacking/hacking_controller.js", 
             "basic_hacking/hack.js", 
