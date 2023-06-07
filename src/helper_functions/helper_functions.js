@@ -98,3 +98,8 @@ export async function break_ports(ns, target_host) {
 export function scp_helper(ns, target) {
     ns.scp("helper_functions/helper_functions.js", target);
 }
+
+
+export function send_on_death(port, data) {
+  port.write(data);
+}

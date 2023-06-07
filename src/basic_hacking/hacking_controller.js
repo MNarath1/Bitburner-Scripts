@@ -22,7 +22,6 @@ export async function main(ns) {
             await ns.sleep(1000*60);
             continue;
           }
-        await ns.sleep(100);
         }
     }
 }
