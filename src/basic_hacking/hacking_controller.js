@@ -8,7 +8,7 @@ export async function main(ns) {
     const mem = ns.args[3];
     ns.disableLog("killall");
     while(true){
-        ns.killall(ns.getHostname(),true);
+        ns.killall(ns.getHostname(), true);
         var security_level = ns.getServerSecurityLevel(target);
         var server_money = ns.getServerMoneyAvailable(target);  
         if(security_level > securityThresh) {
