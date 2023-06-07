@@ -99,7 +99,7 @@ export function scp_helper(ns, target) {
     ns.scp("helper_functions/helper_functions.js", target);
 }
 
-
+/** @param {import("@ns").NetscriptPort} port */
 export function send_on_death(port, data) {
   port.write(data);
 }
