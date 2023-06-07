@@ -15,13 +15,14 @@
   "rules": {
     "no-constant-condition": ["off"],
     "@typescript-eslint/no-floating-promises": "error",
-    "keyword-spacing": ["error", { "overrides": {
+    "keyword-spacing": ["warn", { "overrides": {
       "if": { "after": false },
       "for": { "after": false },
       "while": { "after": false },
       "static": { "after": false },
       "as": { "after": false }
     } }],
-    "semi":"error"
+    "semi":"error",
+    "comma-spacing":"warn"
   }
 }
