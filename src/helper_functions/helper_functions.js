@@ -32,7 +32,7 @@ export function delete_smallest_server(ns) {
           min_Server = Server;
         }
       }
-      ns.tprint("Deleting smallest Server to free Space!")
+      ns.tprint("Deleting smallest Server to free Space!");
       ns.tprint("Deleting " + min_Server);
       ns.killall(min_Server);
       return ns.deleteServer(min_Server);
