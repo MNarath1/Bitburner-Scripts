@@ -6,7 +6,7 @@ export async function main(ns) {
     const moneyThresh = ns.args[1] * 0.75;
     const securityThresh = ns.args[2] + 5;
     const mem = ns.args[3];
-    let elapsed_time = Date.now() - 2000; // so it doesn't trigger initially
+    let elapsed_time = 0;
     while(true){
         let time_expired = Date.now() - elapsed_time;
         if(time_expired <= 1000) {
