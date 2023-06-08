@@ -6,7 +6,14 @@ export async function main(ns) {
     const moneyThresh = ns.args[1] * 0.75;
     const securityThresh = ns.args[2] + 5;
     const mem = ns.args[3];
+    let elapsed_time = Date.now() - 2000; // so it doesn't trigger initially
     while(true){
+        let time_expired = Date.now() - elapsed_time;
+        if(time_expired <= 1000) {
+          ns.printf("WARNING: Script too fast\n Time passed: %d ms\n Sleeping...", time_expired);
+          await ns.sleep(1000); // if the exec time is less than a second don't allow it to loop too fast to avoid game freezing
+        }
+        elapsed_time = Date.now();
         var security_level = ns.getServerSecurityLevel(target);
         var server_money = ns.getServerMoneyAvailable(target);  
         if(security_level > securityThresh) {
