@@ -24,6 +24,7 @@
     } }],
     "semi":"error",
     "comma-spacing":"warn",
-    "no-var":"warn"
+    "no-var":"warn",
+    "space-before-blocks":"warn"
   }
 }

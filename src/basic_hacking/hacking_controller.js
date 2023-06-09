@@ -7,7 +7,7 @@ export async function main(ns) {
     const securityThresh = ns.args[2] + 5;
     const mem = ns.args[3];
     let before_script_time = 0;
-    while(true){
+    while(true) {
         let elapsed_time = Date.now() - before_script_time;
         if(elapsed_time <= 1000) {
           ns.printf("WARNING: Script too fast\n Time passed: %d ms\n Sleeping...", elapsed_time);

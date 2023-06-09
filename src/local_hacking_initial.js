@@ -9,13 +9,13 @@ export async function main(ns) {
 
     if(!ns.hasRootAccess(target_host)) {
       ns.tprint("Root Priviliges Required.");
-      if(ns.getServerNumPortsRequired(target_host) <= await break_ports(ns, target_host)){
+      if(ns.getServerNumPortsRequired(target_host) <= await break_ports(ns, target_host)) {
         await ns.sleep(500);
         ns.print("Attempting to elevate Priviliges.");
         await ns.sleep(200);
         ns.nuke(target_host);
       }
-      if(ns.hasRootAccess(target_host)){
+      if(ns.hasRootAccess(target_host)) {
         ns.tprint("Root Access elevation sucessfull!");
       } else {
         ns.tprint("Root Priviliges Escalation unsucessfull!");
