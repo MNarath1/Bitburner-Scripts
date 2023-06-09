@@ -23,6 +23,7 @@
       "as": { "after": false }
     } }],
     "semi":"error",
-    "comma-spacing":"warn"
+    "comma-spacing":"warn",
+    "no-var":"warn"
   }
 }

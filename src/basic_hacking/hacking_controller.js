@@ -14,8 +14,8 @@ export async function main(ns) {
           await ns.sleep(1000); // if the exec time is less than a second don't allow it to loop too fast to avoid game freezing
         }
         before_script_time = Date.now();
-        var security_level = ns.getServerSecurityLevel(target);
-        var server_money = ns.getServerMoneyAvailable(target);  
+        let security_level = ns.getServerSecurityLevel(target);
+        let server_money = ns.getServerMoneyAvailable(target);  
         if(security_level > securityThresh) {
             await run_hacking_worker(ns, "basic_hacking/weaken.js", Math.floor(mem/ns.args[4]), target);
             // const data = port.read() //only needed if you want to grab data otherwise clear the port or so

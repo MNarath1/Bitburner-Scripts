@@ -20,14 +20,14 @@ export async function run_worker(ns, scriptname, threads, target) {
 
 /**
  * Deletes smallest bought Server if the max server limit has been reached.
- *  @param {import("@ns").NS} ns */
+ ** @param {import("@ns").NS} ns */
 export function delete_smallest_server(ns) {
-    var purchaseServers = ns.getPurchasedServers();
+    let purchaseServers = ns.getPurchasedServers();
     if(purchaseServers.length >= ns.getPurchasedServerLimit()) {
-      var min_Server;
-      var min_ram = 2**20;
+      let min_Server;
+      let min_ram = 2**20;
       for(let Server of purchaseServers) {
-        var temp_ram = ns.getServerMaxRam(Server);
+        let temp_ram = ns.getServerMaxRam(Server);
         if(temp_ram <= min_ram) {
           min_ram = temp_ram;
           min_Server = Server;
@@ -43,7 +43,7 @@ export function delete_smallest_server(ns) {
 
 /** @param {import("@ns").NS} ns */
 export async function break_ports(ns, target_host) {
-    var current_ports = 0;
+    let current_ports = 0;
     
     if(ns.fileExists("BruteSSH.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
     ns.tprint("Executing SSH Bruteforce Attack.");
