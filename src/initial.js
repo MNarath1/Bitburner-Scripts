@@ -8,10 +8,8 @@ export async function main(ns) {
     ns.tprint("Starting Attack on Target Server!");
   
     if(!ns.hasRootAccess(target_host)) {
-      var open_ports = await break_ports(ns, target_host);
-
       ns.tprint("Root Priviliges Required.");
-      if(ns.getServerNumPortsRequired(target_host) <= open_ports){
+      if(ns.getServerNumPortsRequired(target_host) <= await break_ports(ns, target_host)){
         await ns.sleep(500);
         ns.print("Attempting to elevate Priviliges.");
         await ns.sleep(200);
