@@ -1,3 +1,6 @@
+Personal Bitburner Scripts Repo
+Original Template Repo: https://github.com/Tanimodori/viteburner-template
+
 # Viteburner-template
 
 This is a template for a viteburner project. It is a simple example of how to use Viteburner.
