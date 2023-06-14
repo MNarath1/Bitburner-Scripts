@@ -21,7 +21,7 @@ export async function main(ns) {
       }
       server_exists = true;
     }
-    ns.tprintf("Chose Target:%s", target_host);
+    ns.tprintf("Chosen Target Server:%s", target_host);
 
     const server_cost_array = get_server_cost(ns);
     const prompt_array = format_dropdown_choices(ns, server_cost_array);
