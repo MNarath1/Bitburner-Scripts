@@ -9,7 +9,7 @@ export async function main(ns) {
     const prompt_array = format_dropdown_choices(ns, server_cost_array);
 
     ns.tprintf("Starting Attack on %s!", target_host);
-    
+
     if(!ns.hasRootAccess(target_host)) {
       ns.tprint("Root Priviliges Required.");
       if(ns.getServerNumPortsRequired(target_host) <= await break_ports(ns, target_host)) {
@@ -86,7 +86,12 @@ function get_server_cost(ns) {
 function format_dropdown_choices(ns, cost_array) {
     let prompt_array = Array(20);
     for(let index = 0; index < 20; index++) {
-      prompt_array[index] = `${index} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
+      if(ns.getServerMoneyAvailable("home")  >= cost_array[index]) {
+        prompt_array[index] = `${index} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
+      } else {
+        prompt_array.splice(index, prompt_array.length-index+1);
+        break;
+      }
       }
     return prompt_array;
     }
