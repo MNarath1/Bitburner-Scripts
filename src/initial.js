@@ -39,18 +39,21 @@ export async function main(ns) {
         ns.tprint("Root Access elevation sucessfull!");
       } else {
         ns.tprint("Root Priviliges Escalation unsucessfull!");
-        return;
+        ns.exit();
       }
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
       let choice = prompt_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: prompt_array}));
       attack_memory = 2**(choice+1);
+      if(choice == -1) {
+        ns.exit();
+      }
       const server_cost = server_cost_array[choice];
       if(server_cost > ns.getServerMoneyAvailable("home")) {
       ns.tprint("Cannot buy server with current funds!");
       ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
-      return;
+      ns.exit();
       } else {
         //comment this out if you need to start with low ram
         //------------------------------------------------
