@@ -78,6 +78,8 @@ function get_server_cost(ns) {
     }
   return cost_array;
   }
+
+  
 /** @param {import("@ns").NS} ns */
 function format_dropdown(ns, cost_array) {
     let prompt_array = Array(20);
