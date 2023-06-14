@@ -70,16 +70,16 @@ export async function main(ns) {
 
 /** @param {import("@ns").NS} ns */
 function get_server_cost(ns) {
-  let cost_array = Array(20);
-  for(let index = 0; index < 20; index++) {
-    let ram = 2** (index+1);
-    let server_cost = ns.getPurchasedServerCost(ram);
-    cost_array[index] = server_cost;
+    let cost_array = Array(20);
+    for(let index = 0; index < 20; index++) {
+      let ram = 2** (index+1);
+      let server_cost = ns.getPurchasedServerCost(ram);
+      cost_array[index] = server_cost;
+      }
+    return cost_array;
     }
-  return cost_array;
-  }
 
-  
+
 /** @param {import("@ns").NS} ns */
 function format_dropdown(ns, cost_array) {
     let prompt_array = Array(20);
