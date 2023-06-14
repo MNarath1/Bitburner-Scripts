@@ -3,7 +3,9 @@ import { break_ports, delete_smallest_server, scp_helper } from "./helper_functi
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
     const target_host = ns.args[0];
-    const attack_memory = 2**ns.args[1];
+    const server_cost_array = get_server_cost(ns);
+    let attack_memory;
+    let server_cost;
   
     ns.tprint("Starting Attack on Target Server!");
   
@@ -24,7 +26,9 @@ export async function main(ns) {
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
-      const server_cost = ns.getPurchasedServerCost(attack_memory);
+      let choice = server_cost_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: server_cost_array}));
+      attack_memory = 2**(choice+1);
+      server_cost = ns.getPurchasedServerCost(attack_memory);
       if(server_cost > ns.getServerMoneyAvailable("home")) {
       ns.tprint("Cannot buy server with current funds!");
       ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
@@ -34,7 +38,7 @@ export async function main(ns) {
         //------------------------------------------------
         delete_smallest_server(ns);
         //------------------------------------------------
-        ns.tprint("Buying server");
+        ns.tprintf("Buying server for %s", ns.formatNumber(server_cost));
       }
   
     const attack_server = ns.purchaseServer(target_host + "_attack_server", 
@@ -61,4 +65,16 @@ export async function main(ns) {
             ns.getScriptRam("basic_hacking/weaken.js"),
             ns.getScriptRam("basic_hacking/grow.js"),
             ns.getScriptRam("basic_hacking/hack.js"));
+  }
+
+
+/** @param {import("@ns").NS} ns */
+function get_server_cost(ns) {
+  let cost_array = Array(20);
+  for(let index = 0; index < 20; index++) {
+    let ram = 2** (index+1);
+    let server_cost = ns.getPurchasedServerCost(ram);
+    cost_array[index] = `${index} Server Cost for ${ns.formatRam(ram)} is ${ns.formatNumber(server_cost)}`;
+    }
+  return cost_array;
   }
