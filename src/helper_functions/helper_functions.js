@@ -107,7 +107,7 @@ export function send_on_death(port, data) {
 
 /** @param {import("@ns").NS} ns */
 export async function input_server(ns) {
-  let target_host;
+  let target_host = String();
   let server_exists = false;
   let server_choice_prompt = "Input Target Server!";
   while(!server_exists) {
@@ -119,7 +119,6 @@ export async function input_server(ns) {
       if(target_host == "") {
         ns.exit();
       }
-      target_host = null;
       continue;
     }
     server_exists = true;
