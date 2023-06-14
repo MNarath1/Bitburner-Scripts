@@ -92,6 +92,6 @@ function format_dropdown_choices(ns, cost_array) {
         prompt_array.splice(index, prompt_array.length-index+1);
         break;
       }
-      }
+    }
     return prompt_array;
     }
