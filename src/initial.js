@@ -84,8 +84,7 @@ function get_server_cost(ns) {
 function format_dropdown(ns, cost_array) {
     let prompt_array = Array(20);
     for(let index = 0; index < 20; index++) {
-      let ram = 2** (index+1);
-      prompt_array[index] = `${index} Server Cost for ${ns.formatRam(ram)} is ${ns.formatNumber(cost_array[index])}`;
+      prompt_array[index] = `${index} Server Cost for ${ns.formatRam(2** (index+1))} is ${ns.formatNumber(cost_array[index])}`;
       }
     return prompt_array;
     }
