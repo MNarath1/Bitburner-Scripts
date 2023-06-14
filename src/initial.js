@@ -1,33 +1,16 @@
-import { break_ports, delete_smallest_server, scp_helper } from "./helper_functions/helper_functions";
+import { break_ports, delete_smallest_server, input_server, scp_helper } from "./helper_functions/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
-    let target_host = null; 
     let attack_memory;
-    let has_root;
-    let server_exists = false;
-    let server_choice_prompt = "Input Target Server!";
-    while(!server_exists) {
-      try {
-        target_host = await ns.prompt(server_choice_prompt, {type: "text"});
-        has_root = ns.hasRootAccess(target_host);
-      } catch (error) {
-        server_choice_prompt = "Target Server doesn't exist.\nTry to input another Target Server!";
-        if(target_host == "") {
-          ns.exit();
-        }
-        target_host = null;
-        continue;
-      }
-      server_exists = true;
-    }
-    ns.tprintf("Chosen Target Server:%s", target_host);
 
+    let target_host = await input_server(ns);
     const server_cost_array = get_server_cost(ns);
     const prompt_array = format_dropdown_choices(ns, server_cost_array);
 
-    ns.tprint("Starting Attack on Target Server!");
-    if(!has_root) {
+    ns.tprintf("Starting Attack on %s!", target_host);
+    
+    if(!ns.hasRootAccess(target_host)) {
       ns.tprint("Root Priviliges Required.");
       if(ns.getServerNumPortsRequired(target_host) <= await break_ports(ns, target_host)) {
         await ns.sleep(500);

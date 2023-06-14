@@ -1,11 +1,11 @@
-import { break_ports } from "./helper_functions/helper_functions";
+import { break_ports, input_server } from "./helper_functions/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
-    const target_host = ns.args[0];
     const attack_server = ns.getHostname();
+    const target_host = input_server(ns);
   
-    ns.tprint("Starting Attack on Target Server!");
+    ns.tprintf("Starting Attack on %s!", target_host);
 
     if(!ns.hasRootAccess(target_host)) {
       ns.tprint("Root Priviliges Required.");

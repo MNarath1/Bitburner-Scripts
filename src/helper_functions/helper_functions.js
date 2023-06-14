@@ -103,3 +103,27 @@ export function scp_helper(ns, target) {
 export function send_on_death(port, data) {
   port.write(data);
 }
+
+
+/** @param {import("@ns").NS} ns */
+export async function input_server(ns) {
+  let target_host;
+  let server_exists = false;
+  let server_choice_prompt = "Input Target Server!";
+  while(!server_exists) {
+    try {
+      target_host = await ns.prompt(server_choice_prompt, {type: "text"});
+      ns.hasRootAccess(target_host);
+    } catch (error) {
+      server_choice_prompt = "Target Server doesn't exist.\nTry to input another Target Server!";
+      if(target_host == "") {
+        ns.exit();
+      }
+      target_host = null;
+      continue;
+    }
+    server_exists = true;
+  }
+  ns.tprintf("Chosen Target Server:%s", target_host);
+  return target_host;
+}
