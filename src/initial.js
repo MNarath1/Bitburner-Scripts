@@ -4,7 +4,7 @@ import { break_ports, delete_smallest_server, scp_helper } from "./helper_functi
 export async function main(ns) {
     const target_host = ns.args[0];
     const server_cost_array = get_server_cost(ns);
-    const prompt_array = format_dropdown(ns, server_cost_array);
+    const prompt_array = format_dropdown_choices(ns, server_cost_array);
     let attack_memory;
   
     ns.tprint("Starting Attack on Target Server!");
@@ -79,7 +79,7 @@ function get_server_cost(ns) {
 
 
 /** @param {import("@ns").NS} ns */
-function format_dropdown(ns, cost_array) {
+function format_dropdown_choices(ns, cost_array) {
     let prompt_array = Array(20);
     for(let index = 0; index < 20; index++) {
       prompt_array[index] = `${index} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
