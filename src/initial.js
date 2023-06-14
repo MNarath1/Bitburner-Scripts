@@ -3,7 +3,7 @@ import { break_ports, delete_smallest_server, scp_helper } from "./helper_functi
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
     const target_host = ns.args[0];
-    const attack_memory = ns.args[1];
+    const attack_memory = 2**ns.args[1];
   
     ns.tprint("Starting Attack on Target Server!");
   
