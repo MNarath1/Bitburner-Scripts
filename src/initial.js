@@ -79,7 +79,7 @@ function get_server_cost(ns) {
       cost_array[index] = ns.getPurchasedServerCost(2**(index+1));
       }
     return cost_array;
-    }
+  }
 
 
 /** @param {import("@ns").NS} ns */
@@ -94,4 +94,4 @@ function format_dropdown_choices(ns, cost_array) {
       }
     }
     return prompt_array;
-    }
+  }
