@@ -115,7 +115,7 @@ export async function input_server(ns) {
       target_host = await ns.prompt(server_choice_prompt, {type: "text"});
       ns.hasRootAccess(target_host);
     } catch (error) {
-      server_choice_prompt = "Target Server doesn't exist.\nTry to input another Target Server!";
+      server_choice_prompt = `Target Server "${target_host}" doesn't exist.\nTry to input another Target Server!`;
       if(target_host == "") {
         ns.exit();
       }
