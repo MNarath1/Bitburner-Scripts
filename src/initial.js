@@ -5,7 +5,6 @@ export async function main(ns) {
     const target_host = ns.args[0];
     const server_cost_array = get_server_cost(ns);
     let attack_memory;
-    let server_cost;
   
     ns.tprint("Starting Attack on Target Server!");
   
@@ -28,7 +27,7 @@ export async function main(ns) {
     }
       let choice = server_cost_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: server_cost_array}));
       attack_memory = 2**(choice+1);
-      server_cost = ns.getPurchasedServerCost(attack_memory);
+      const server_cost = ns.getPurchasedServerCost(attack_memory);
       if(server_cost > ns.getServerMoneyAvailable("home")) {
       ns.tprint("Cannot buy server with current funds!");
       ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
