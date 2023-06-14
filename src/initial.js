@@ -72,9 +72,7 @@ export async function main(ns) {
 function get_server_cost(ns) {
     let cost_array = Array(20);
     for(let index = 0; index < 20; index++) {
-      let ram = 2** (index+1);
-      let server_cost = ns.getPurchasedServerCost(ram);
-      cost_array[index] = server_cost;
+      cost_array[index] = ns.getPurchasedServerCost(2**(index+1));
       }
     return cost_array;
     }
