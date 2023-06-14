@@ -124,5 +124,6 @@ export async function input_server(ns) {
     server_exists = true;
   }
   ns.tprintf("Chosen Target Server:%s", target_host);
+  
   return target_host;
 }
