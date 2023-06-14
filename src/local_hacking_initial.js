@@ -3,7 +3,7 @@ import { break_ports, input_server } from "./helper_functions/helper_functions";
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
     const attack_server = ns.getHostname();
-    const target_host = input_server(ns);
+    const target_host = await input_server(ns);
   
     ns.tprintf("Starting Attack on %s!", target_host);
 
