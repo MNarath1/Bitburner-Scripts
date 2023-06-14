@@ -4,6 +4,7 @@ import { break_ports, delete_smallest_server, scp_helper } from "./helper_functi
 export async function main(ns) {
     const target_host = ns.args[0];
     const server_cost_array = get_server_cost(ns);
+    const prompt_array = format_dropdown(ns, server_cost_array);
     let attack_memory;
   
     ns.tprint("Starting Attack on Target Server!");
@@ -25,9 +26,9 @@ export async function main(ns) {
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
-      let choice = server_cost_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: server_cost_array}));
+      let choice = prompt_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: prompt_array}));
       attack_memory = 2**(choice+1);
-      const server_cost = ns.getPurchasedServerCost(attack_memory);
+      const server_cost = server_cost_array[choice];
       if(server_cost > ns.getServerMoneyAvailable("home")) {
       ns.tprint("Cannot buy server with current funds!");
       ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
@@ -73,7 +74,16 @@ function get_server_cost(ns) {
   for(let index = 0; index < 20; index++) {
     let ram = 2** (index+1);
     let server_cost = ns.getPurchasedServerCost(ram);
-    cost_array[index] = `${index} Server Cost for ${ns.formatRam(ram)} is ${ns.formatNumber(server_cost)}`;
+    cost_array[index] = server_cost;
     }
   return cost_array;
   }
+
+function format_dropdown(ns, cost_array) {
+    let prompt_array = Array(20);
+    for(let index = 0; index < 20; index++) {
+      let ram = 2** (index+1);
+      prompt_array[index] = `${index} Server Cost for ${ns.formatRam(ram)} is ${ns.formatNumber(cost_array[index])}`;
+      }
+    return prompt_array;
+    }
