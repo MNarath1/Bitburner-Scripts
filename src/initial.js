@@ -1,4 +1,5 @@
 import { break_ports, delete_smallest_server, input_server, scp_helper } from "./helpers/helper_functions";
+import { home_server } from "./helpers/helper_vars";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
@@ -33,7 +34,7 @@ export async function main(ns) {
         ns.exit();
       }
       const server_cost = server_cost_array[choice];
-      if(server_cost > ns.getServerMoneyAvailable("home")) {
+      if(server_cost > ns.getServerMoneyAvailable(home_server)) {
       ns.tprint("Cannot buy server with current funds!");
       ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
       ns.exit();
@@ -57,7 +58,7 @@ export async function main(ns) {
     ns.scp(["basic_hacking/hacking_controller.js", 
             "basic_hacking/hack.js", 
             "basic_hacking/grow.js", 
-            "basic_hacking/weaken.js"], attack_server, "home");
+            "basic_hacking/weaken.js"], attack_server, home_server);
 
     ns.exec("basic_hacking/hacking_controller.js", 
             attack_server, 
@@ -86,7 +87,7 @@ function get_server_cost(ns) {
 function format_dropdown_choices(ns, cost_array) {
     let prompt_array = Array(20);
     for(let index = 0; index < 20; index++) {
-      if(ns.getServerMoneyAvailable("home")  >= cost_array[index]) {
+      if(ns.getServerMoneyAvailable(home_server)  >= cost_array[index]) {
         prompt_array[index] = `${index} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
       } else {
         prompt_array.splice(index, prompt_array.length-index+1);
