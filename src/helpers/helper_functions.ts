@@ -1,17 +1,17 @@
 //libary file for helper functions that can be imported into other scripts
 
 import { HOME_SERVER } from "./helper_vars";
+import { NS, NetscriptPort } from '@ns';
 
 
 
 
-/** @param {import("@ns").NS} ns */
-export async function run_worker(ns, scriptname, threads, target) {
+export async function run_worker(ns: NS, scriptname: string, threads: number, target: string) {
     const option = {temporary: true, threads: threads};
     const pid = ns.run(scriptname, option, target);
     const port = ns.getPortHandle(pid);
     await port.nextWrite();
-    if(port.peek() <= -1) {
+    if(<number>port.peek() <= -1) {
         port.clear();
         throw new ErrorEvent("Unknown Error Script Terminated");
       }
@@ -21,15 +21,15 @@ export async function run_worker(ns, scriptname, threads, target) {
 
 
 /**
- * Deletes smallest bought Server if the max server limit has been reached.
- ** @param {import("@ns").NS} ns */
-export function delete_smallest_server(ns) {
-    let purchaseServers = ns.getPurchasedServers();
+ * Deletes smallest bought Server if the max server limit has been reached.*/
+
+export function delete_smallest_server(ns: NS) {
+    const purchaseServers = ns.getPurchasedServers();
     if(purchaseServers.length >= ns.getPurchasedServerLimit()) {
-      let min_Server;
+      let min_Server = "";
       let min_ram = 2**20;
-      for(let Server of purchaseServers) {
-        let temp_ram = ns.getServerMaxRam(Server);
+      for(const Server of purchaseServers) {
+        const temp_ram = ns.getServerMaxRam(Server);
         if(temp_ram <= min_ram) {
           min_ram = temp_ram;
           min_Server = Server;
@@ -43,8 +43,7 @@ export function delete_smallest_server(ns) {
 }
 
 
-/** @param {import("@ns").NS} ns */
-export async function break_ports(ns, target_host) {
+export async function break_ports(ns: NS, target_host:string) {
     let current_ports = 0;
     
     if(ns.fileExists("BruteSSH.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
@@ -92,29 +91,28 @@ export async function break_ports(ns, target_host) {
 
 /** 
  * 
- * @param {import("@ns").NS} ns 
  * @param host:String Name of Host Server
  * @param target:String Name of Destination Server
  * 
 */
-export function scp_helper(ns, target) {
+export function scp_helper(ns: NS, target:string) {
     ns.scp(["helpers/helper_functions.js", "helpers/helper_vars.js"], target);
 }
 
 /** @param {import("@ns").NetscriptPort} port */
-export function send_on_death(port, data) {
+export function send_on_death(port: NetscriptPort, data: string|number) {
   port.write(data);
 }
 
 
 /** @param {import("@ns").NS} ns */
-export async function input_server(ns) {
+export async function input_server(ns: NS) {
   let target_host = String();
   let server_exists = false;
   let server_choice_prompt = "Input Target Server!";
   while(!server_exists) {
     try {
-      target_host = await ns.prompt(server_choice_prompt, {type: "text"});
+      target_host = <string> await ns.prompt(server_choice_prompt, {type: "text"});
       ns.hasRootAccess(target_host);
     } catch (error) {
       server_choice_prompt = `Target Server "${target_host}" doesn't exist.\nTry to input another Target Server!`;
