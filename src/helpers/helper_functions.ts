@@ -43,7 +43,7 @@ export function delete_smallest_server(ns: NS) {
 }
 
 
-export async function break_ports(ns: NS, target_host:string) {
+export async function break_ports(ns: NS, target_host: string) {
     let current_ports = 0;
     
     if(ns.fileExists("BruteSSH.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
@@ -95,17 +95,15 @@ export async function break_ports(ns: NS, target_host:string) {
  * @param target:String Name of Destination Server
  * 
 */
-export function scp_helper(ns: NS, target:string) {
+export function scp_helper(ns: NS, target: string) {
     ns.scp(["helpers/helper_functions.js", "helpers/helper_vars.js"], target);
 }
 
-/** @param {import("@ns").NetscriptPort} port */
 export function send_on_death(port: NetscriptPort, data: string|number) {
   port.write(data);
 }
 
 
-/** @param {import("@ns").NS} ns */
 export async function input_server(ns: NS) {
   let target_host = String();
   let server_exists = false;
