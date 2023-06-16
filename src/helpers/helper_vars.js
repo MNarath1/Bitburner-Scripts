@@ -1,0 +1,1 @@
+//for variables that can be imported in other functions
