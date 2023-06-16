@@ -96,7 +96,7 @@ export async function break_ports(ns, target_host) {
  * 
 */
 export function scp_helper(ns, target) {
-    ns.scp("helper_functions/helper_functions.js", target);
+    ns.scp("helpers/helper_functions.js", target);
 }
 
 /** @param {import("@ns").NetscriptPort} port */

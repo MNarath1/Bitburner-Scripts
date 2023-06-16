@@ -1,4 +1,4 @@
-import { scp_helper } from "./helper_functions/helper_functions";
+import { scp_helper } from "./helpers/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {

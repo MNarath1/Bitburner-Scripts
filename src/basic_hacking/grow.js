@@ -1,4 +1,4 @@
-import { send_on_death } from "@/helper_functions/helper_functions";
+import { send_on_death } from "@/helpers/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
