@@ -1,6 +1,6 @@
 //libary file for helper functions that can be imported into other scripts
 
-import { home_server } from "./helper_vars";
+import { HOME_SERVER } from "./helper_vars";
 
 
 
@@ -47,7 +47,7 @@ export function delete_smallest_server(ns) {
 export async function break_ports(ns, target_host) {
     let current_ports = 0;
     
-    if(ns.fileExists("BruteSSH.exe", home_server) && ns.getServerNumPortsRequired(target_host) > current_ports) {
+    if(ns.fileExists("BruteSSH.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
     ns.tprint("Executing SSH Bruteforce Attack.");
     ns.brutessh(target_host);
     current_ports++;
@@ -55,7 +55,7 @@ export async function break_ports(ns, target_host) {
     ns.tprint("Success!");
     }
 
-    if(ns.fileExists("FTPCrack.exe", home_server) && ns.getServerNumPortsRequired(target_host) > current_ports) {
+    if(ns.fileExists("FTPCrack.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
     ns.tprint("Executing attack on FTP Port.");
     ns.ftpcrack(target_host);
     current_ports++;
@@ -63,7 +63,7 @@ export async function break_ports(ns, target_host) {
     ns.tprint("Success!");
     }
 
-    if(ns.fileExists("relaySMTP.exe", home_server) && ns.getServerNumPortsRequired(target_host) > current_ports) {
+    if(ns.fileExists("relaySMTP.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
     ns.tprint("Executing attack on SMTP Port.");
     ns.relaysmtp(target_host);
     current_ports++;
@@ -71,7 +71,7 @@ export async function break_ports(ns, target_host) {
     ns.tprint("Success!");
     }
 
-    if(ns.fileExists("HTTPWorm.exe", home_server) && ns.getServerNumPortsRequired(target_host) > current_ports) {
+    if(ns.fileExists("HTTPWorm.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
     ns.tprint("Executing attack on HTTP Port.");
     ns.httpworm(target_host);
     current_ports++;
@@ -79,7 +79,7 @@ export async function break_ports(ns, target_host) {
     ns.tprint("Success!");
     }
 
-    if(ns.fileExists("SQLInject.exe", home_server) && ns.getServerNumPortsRequired(target_host) > current_ports) {
+    if(ns.fileExists("SQLInject.exe", HOME_SERVER) && ns.getServerNumPortsRequired(target_host) > current_ports) {
     ns.tprint("Executing SQL injection attack.");
     ns.sqlinject(target_host);
     current_ports++;

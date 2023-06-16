@@ -1,5 +1,5 @@
 import { scp_helper } from "./helpers/helper_functions";
-import { home_server } from "./helpers/helper_vars";
+import { HOME_SERVER } from "./helpers/helper_vars";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
@@ -7,7 +7,7 @@ export async function main(ns) {
   let target_host = ns.args[1];
   let mem = (ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server)- ns.getScriptRam("basic_hacking/hacking_controller.js"));
   scp_helper(ns, attack_server);
-  ns.scp(["basic_hacking/hacking_controller.js", "basic_hacking/hack.js", "basic_hacking/grow.js", "basic_hacking/weaken.js"], attack_server, home_server);
+  ns.scp(["basic_hacking/hacking_controller.js", "basic_hacking/hack.js", "basic_hacking/grow.js", "basic_hacking/weaken.js"], attack_server, HOME_SERVER);
 
   ns.exec("basic_hacking/hacking_controller.js", attack_server, 1,
   target_host, 
