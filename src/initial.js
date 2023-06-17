@@ -1,13 +1,18 @@
-import { break_ports, delete_smallest_server, input_server, scp_helper } from "./helpers/helper_functions";
+import { break_ports, delete_smallest_server, scp_helper } from "./helpers/helper_functions";
 import { HOME_SERVER } from "./helpers/helper_vars";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
     let attack_memory;
 
-    let target_host = await input_server(ns);
+    const target_host = ns.args[0];
     const server_cost_array = get_server_cost(ns);
     const prompt_array = format_dropdown_choices(ns, server_cost_array);
+
+    if(!target_host) {
+      ns.tprint("No target server please input valid server!");
+      ns.exit();
+    }
 
     ns.tprintf("Starting Attack on %s!", target_host);
 
@@ -95,4 +100,9 @@ function format_dropdown_choices(ns, cost_array) {
       }
     }
     return prompt_array;
+  }
+
+//autocomplete for server 
+  export function autocomplete(data) {
+      return data.servers;
   }

@@ -1,10 +1,15 @@
-import { break_ports, input_server } from "./helpers/helper_functions";
+import { break_ports } from "./helpers/helper_functions";
 
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
     const attack_server = ns.getHostname();
-    const target_host = await input_server(ns);
+    const target_host = ns.args[0];
   
+    if(!target_host) {
+      ns.tprint("No target server please input valid server!");
+      ns.exit();
+    }
+
     ns.tprintf("Starting Attack on %s!", target_host);
 
     if(!ns.hasRootAccess(target_host)) {
@@ -47,3 +52,8 @@ export async function main(ns) {
             ns.getScriptRam("basic_hacking/grow.js"),
             ns.getScriptRam("basic_hacking/hack.js"));
   }
+
+  //autocomplete for server 
+  export function autocomplete(data) {
+    return data.servers;
+}
