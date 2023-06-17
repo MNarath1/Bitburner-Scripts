@@ -3,9 +3,6 @@
 import { HOME_SERVER } from "./helper_vars";
 import { NS, NetscriptPort } from '@ns';
 
-
-
-
 export async function run_worker(ns: NS, scriptname: string, threads: number, target: string) {
     const option = {temporary: true, threads: threads};
     const pid = ns.run(scriptname, option, target);
