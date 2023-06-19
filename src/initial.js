@@ -93,7 +93,7 @@ function format_dropdown_choices(ns, cost_array) {
     let prompt_array = Array(20);
     for(let index = 0; index < 20; index++) {
       if(ns.getServerMoneyAvailable(HOME_SERVER)  >= cost_array[index]) {
-        prompt_array[index] = `${index} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
+        prompt_array[index] = `${index + 1} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
       } else {
         prompt_array.splice(index, prompt_array.length-index+1);
         break;
