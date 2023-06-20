@@ -18,3 +18,8 @@ export async function main(ns) {
   ns.getScriptRam("basic_hacking/grow.js"),
   ns.getScriptRam("basic_hacking/hack.js"));
 }
+
+  //autocomplete for server 
+  export function autocomplete(data) {
+    return data.servers;
+}
