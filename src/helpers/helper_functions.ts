@@ -1,7 +1,7 @@
 //libary file for helper functions that can be imported into other scripts
 
 import { HOME_SERVER } from "./helper_vars";
-import { NS, NetscriptPort } from '@ns';
+import { NS } from '@ns';
 
 /**
  * 
