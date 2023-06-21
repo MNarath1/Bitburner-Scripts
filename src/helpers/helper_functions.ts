@@ -102,9 +102,15 @@ export async function break_ports(ns: NS, target_host: string) {
 export function scp_helper(ns: NS, target: string) {
     ns.scp(["helpers/helper_functions.js", "helpers/helper_vars.js"], target);
 }
-
-export function send_on_death(port: NetscriptPort, data: string|number) {
-  port.write(data);
+/**
+ * 
+ * @param ns 
+ * @param data Array of size 1 for data (has to be array so we can pass it on and modify it after the fact)
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function send_on_death(ns: NS, data: any[]) {
+  const port = ns.getPortHandle(ns.pid);
+  ns.atExit(() => {port.write(data[0]);});
 }
 
 
