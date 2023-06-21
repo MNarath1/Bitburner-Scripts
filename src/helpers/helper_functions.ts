@@ -11,8 +11,7 @@ import { NS, NetscriptPort } from '@ns';
  * @param args Additional Arguments to be passed to the Worker Script
  * @returns Passes the Data Read from the Worker Port to upwards
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function run_worker(ns: NS, scriptname: string, threads: number, ...args: any) {
+export async function run_worker(ns: NS, scriptname: string, threads: number, ...args: any[]) {
     const option = {temporary: true, threads: threads};
     const pid = ns.run(scriptname, option, ...args);
     const port = ns.getPortHandle(pid);

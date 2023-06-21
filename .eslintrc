@@ -25,6 +25,7 @@
     "semi":"error",
     "comma-spacing":"warn",
     "no-var":"warn",
-    "space-before-blocks":"warn"
+    "space-before-blocks":"warn",
+    "@typescript-eslint/no-explicit-any": ["warn", { "ignoreRestArgs": true }]
   }
 }
