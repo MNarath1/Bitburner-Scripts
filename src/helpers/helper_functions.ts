@@ -104,6 +104,7 @@ export function scp_helper(ns: NS, target: string) {
 }
 /**
  * Function to send Data from the worker back to the controller once the worker dies (supports only 1 data entry for now)
+ * Data has to be input as a Array of size 1 so that the data can be modified after the array got passed to the script
  * @param ns 
  * @param data Array of size 1 for data (has to be array so we can pass it on and modify it after the fact)
  */
