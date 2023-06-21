@@ -97,7 +97,6 @@ export async function break_ports(ns: NS, target_host: string) {
 
 /** 
  * 
- * @param host:String Name of Host Server
  * @param target:String Name of Destination Server
  * 
 */
