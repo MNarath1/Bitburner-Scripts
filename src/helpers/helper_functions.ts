@@ -15,6 +15,7 @@ export async function run_worker(ns: NS, scriptname: string, threads: number, ..
     const option = {temporary: true, threads: threads};
     const pid = ns.run(scriptname, option, ...args);
     const port = ns.getPortHandle(pid);
+    void get_worker_log(ns, scriptname, ...args);
     await port.nextWrite();
     if(<number>port.peek() <= -1) {
         port.clear();
@@ -22,6 +23,12 @@ export async function run_worker(ns: NS, scriptname: string, threads: number, ..
       }
     return port.read();
     
+}
+
+export async function get_worker_log(ns: NS, scriptname: string, ...args: any[]): Promise<void> {
+  ns.disableLog('ALL');
+  await ns.asleep(100);
+  ns.print(ns.getScriptLogs(scriptname, undefined, ...args)[0].split("]")[1]); //passes the logs on to the logs of the controller we split the string to avoid passing the log time on as well
 }
 
 
