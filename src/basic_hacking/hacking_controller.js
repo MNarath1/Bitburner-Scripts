@@ -9,6 +9,7 @@ export async function main(ns) {
     const securityThresh = ns.args[2] + 5;
     const mem = ns.args[3];
     let before_script_time = 0;
+    ns.disableLog("asleep");
     while(true) {
         let elapsed_time = Date.now() - before_script_time;
         if(elapsed_time <= 1000) {
