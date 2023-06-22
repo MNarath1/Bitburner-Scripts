@@ -26,7 +26,8 @@ export async function run_worker(ns: NS, scriptname: string, threads: number, ..
 }
 
 export async function get_worker_log(ns: NS, scriptname: string, ...args: any[]): Promise<void> {
-  ns.disableLog('ALL');
+  ns.disableLog("disableLog");
+  ns.disableLog("asleep");
   await ns.asleep(100);
   ns.print(ns.getScriptLogs(scriptname, undefined, ...args)[0].split("]")[1]); //passes the logs on to the logs of the controller we split the string to avoid passing the log time on as well
 }
