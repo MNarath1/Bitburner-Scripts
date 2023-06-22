@@ -1,82 +1,108 @@
+import { break_ports, delete_smallest_server, scp_helper } from "./helpers/helper_functions";
+import { HOME_SERVER } from "./helpers/helper_vars";
+
 /** @param {import("@ns").NS} ns */
 export async function main(ns) {
-    var target_host = ns.args[0];
-    var attack_memory = ns.args[1];
-  
-    ns.tprint("Starting Attack on Target Server!");
-    var current_ports = 0;
-  
-    if(ns.fileExists("BruteSSH.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-      ns.tprint("Executing SSH Bruteforce Attack.");
-      ns.brutessh(target_host);
-      current_ports++;
-      await ns.sleep(1000);
-      ns.tprint("Success!");
-    }
-  
-    if(ns.fileExists("FTPCrack.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-      ns.tprint("Executing attack on FTP Port.");
-      ns.ftpcrack(target_host);
-      current_ports++;
-      await ns.sleep(1000);
-      ns.tprint("Success!");
+    let attack_memory;
+
+    const target_host = ns.args[0];
+    const server_cost_array = get_server_cost(ns);
+    const prompt_array = format_dropdown_choices(ns, server_cost_array);
+
+    if(!target_host) {
+      ns.tprint("No target server please input valid server!");
+      ns.exit();
     }
 
-    if(ns.fileExists("relaySMTP.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-      ns.tprint("Executing attack on SMTP Port.");
-      ns.relaysmtp(target_host);
-      current_ports++;
-      await ns.sleep(1000);
-      ns.tprint("Success!");
-    }
+    ns.tprintf("Starting Attack on %s!", target_host);
 
-    if(ns.fileExists("HTTPWorm.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-      ns.tprint("Executing attack on HTTP Port.");
-      ns.httpworm(target_host);
-      current_ports++;
-      await ns.sleep(1000);
-      ns.tprint("Success!");
-    }
-
-    if(ns.fileExists("SQLInject.exe", "home") && ns.getServerNumPortsRequired(target_host) > current_ports) {
-      ns.tprint("Executing SQL injection attack.");
-      ns.sqlinject(target_host);
-      current_ports++;
-      await ns.sleep(1000);
-      ns.tprint("Success!");
-    }
-  
     if(!ns.hasRootAccess(target_host)) {
       ns.tprint("Root Priviliges Required.");
-      if(ns.getServerNumPortsRequired(target_host) <= current_ports){
+      if(ns.getServerNumPortsRequired(target_host) <= await break_ports(ns, target_host)) {
         await ns.sleep(500);
         ns.print("Attempting to elevate Priviliges.");
         await ns.sleep(200);
         ns.nuke(target_host);
       }
-      if(ns.hasRootAccess(target_host)){
+      if(ns.hasRootAccess(target_host)) {
         ns.tprint("Root Access elevation sucessfull!");
       } else {
         ns.tprint("Root Priviliges Escalation unsucessfull!");
-        return;
+        ns.exit();
       }
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
-  
-      if(ns.getPurchasedServerCost(attack_memory) > ns.getServerMoneyAvailable("home")) {
+      let choice = prompt_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: prompt_array}));
+      attack_memory = 2**(choice+1);
+      if(choice == -1) {
+        ns.exit();
+      }
+      const server_cost = server_cost_array[choice];
+      if(server_cost > ns.getServerMoneyAvailable(HOME_SERVER)) {
       ns.tprint("Cannot buy server with current funds!");
-      return;
-    }
+      ns.tprintf("Needed funds %s", ns.formatNumber(server_cost));
+      ns.exit();
+      } else {
+        //comment this out if you need to start with low ram
+        //------------------------------------------------
+        delete_smallest_server(ns);
+        //------------------------------------------------
+        ns.tprintf("Buying server for %s", ns.formatNumber(server_cost));
+      }
   
-    var attack_server = ns.purchaseServer(target_host + "_attack_server", 
-    attack_memory);
+    const attack_server = ns.purchaseServer(target_host + "_attack_server", 
+                                            attack_memory);
   
-    var threads = Math.floor((ns.getServerMaxRam(attack_server)-ns.getServerUsedRam(attack_server))/ns.getScriptRam("hack.js","home"));
-    ns.scp("hack.js", attack_server, "home");
-    ns.exec("hack.js",attack_server, threads,
-    target_host, 
-    ns.getServerMaxMoney(target_host), 
-    ns.getServerMinSecurityLevel(target_host));
+    const mem = (ns.getServerMaxRam(attack_server)
+                - ns.getServerUsedRam(attack_server)
+                - ns.getScriptRam("basic_hacking/hacking_controller.js"));
     
+    scp_helper(ns, attack_server);
+
+    ns.scp(["basic_hacking/hacking_controller.js", 
+            "basic_hacking/hack.js", 
+            "basic_hacking/grow.js", 
+            "basic_hacking/weaken.js"], attack_server, HOME_SERVER);
+
+    ns.exec("basic_hacking/hacking_controller.js", 
+            attack_server, 
+            1,
+            target_host, 
+            ns.getServerMaxMoney(target_host), 
+            ns.getServerMinSecurityLevel(target_host),
+            mem,
+            ns.getScriptRam("basic_hacking/weaken.js"),
+            ns.getScriptRam("basic_hacking/grow.js"),
+            ns.getScriptRam("basic_hacking/hack.js"));
+  }
+
+
+/** @param {import("@ns").NS} ns */
+function get_server_cost(ns) {
+    let cost_array = Array(20);
+    for(let index = 0; index < 20; index++) {
+      cost_array[index] = ns.getPurchasedServerCost(2**(index+1));
+      }
+    return cost_array;
+  }
+
+
+/** @param {import("@ns").NS} ns */
+function format_dropdown_choices(ns, cost_array) {
+    let prompt_array = Array(20);
+    for(let index = 0; index < 20; index++) {
+      if(ns.getServerMoneyAvailable(HOME_SERVER)  >= cost_array[index]) {
+        prompt_array[index] = `${index + 1} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
+      } else {
+        prompt_array.splice(index, prompt_array.length-index+1);
+        break;
+      }
+    }
+    return prompt_array;
+  }
+
+//autocomplete for server 
+  export function autocomplete(data) {
+      return data.servers;
   }
