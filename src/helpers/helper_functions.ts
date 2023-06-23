@@ -1,6 +1,6 @@
 //libary file for helper functions that can be imported into other scripts
 
-import { HOME_SERVER } from "./helper_vars";
+import { HOME_SERVER, scp_functions, scp_helper_libary } from "./helper_vars";
 import { NS } from '@ns';
 
 /**
@@ -105,10 +105,9 @@ export async function break_ports(ns: NS, target_host: string) {
  * @param target:String Name of Destination Server
  * 
 */
-export function scp_helper(ns: NS, target: string) {
-    ns.scp(["helpers/helper_functions.js", "helpers/helper_vars.js"], target);
+export function scp_important_files(ns: NS, target: string) {
+    ns.scp(scp_functions.concat(scp_helper_libary), target, HOME_SERVER);
 }
-
 
 /**
  * Function to send Data from the worker back to the controller once the worker dies (supports only 1 data entry for now)
