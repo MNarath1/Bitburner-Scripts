@@ -14,7 +14,7 @@ export async function main(ns) {
         let elapsed_time = Date.now() - before_script_time;
         if(elapsed_time <= 1000) {
           ns.printf("WARNING: Script too fast\n Time passed: %d ms\n Sleeping...", elapsed_time);
-          await ns.sleep(1000); // if the exec time is less than a second don't allow it to loop too fast to avoid game freezing
+          await ns.asleep(1000); // if the exec time is less than a second don't allow it to loop too fast to avoid game freezing
         }
         before_script_time = Date.now();
         let security_level = ns.getServerSecurityLevel(target);
@@ -29,7 +29,7 @@ export async function main(ns) {
             await run_worker(ns, "basic_hacking/hack.js", Math.floor(mem/ns.args[6]), target);
           } catch (ErrorEvent) {
             ns.print("Cannot execute hack waiting....");
-            await ns.sleep(1000*60);
+            await ns.asleep(1000*60);
             continue;
           }
         }
