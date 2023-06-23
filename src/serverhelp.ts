@@ -2,6 +2,7 @@ import { scp_helper } from "./helpers/helper_functions";
 import { HOME_SERVER } from "./helpers/helper_vars";
 import { AutocompleteData, NS } from '@ns';
 
+/** @param {NS} ns */
 export async function main(ns: NS) {
   const attack_server = <string>ns.args[0];
   const target_host = <string>ns.args[1];

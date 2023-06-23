@@ -2,7 +2,8 @@ import { break_ports, delete_smallest_server, scp_helper } from "./helpers/helpe
 import { HOME_SERVER } from "./helpers/helper_vars";
 import { AutocompleteData, NS } from '@ns';
 
-export async function main(ns:NS) {
+/** @param {NS} ns */
+export async function main(ns: NS) {
     let attack_memory = 0;
 
     const target_host = <string>ns.args[0];
