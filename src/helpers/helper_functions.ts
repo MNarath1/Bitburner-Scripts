@@ -1,7 +1,7 @@
 //libary file for helper functions that can be imported into other scripts
 
 import { HOME_SERVER, scp_functions, scp_helper_libary } from "./helper_vars";
-import { NS } from '@ns';
+import { NS, RunOptions } from '@ns';
 
 /**
  * 
@@ -12,7 +12,7 @@ import { NS } from '@ns';
  * @returns Passes the Data Read from the Worker Port to upwards
  */
 export async function run_worker(ns: NS, scriptname: string, threads: number, ...args: any[]) {
-    const option = {temporary: true, threads: threads};
+    const option: RunOptions = {temporary: true, threads: threads};
     const pid = ns.run(scriptname, option, ...args);
     const port = ns.getPortHandle(pid);
     void get_worker_log(ns, scriptname, ...args);
