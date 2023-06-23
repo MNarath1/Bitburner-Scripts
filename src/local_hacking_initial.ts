@@ -1,9 +1,9 @@
 import { break_ports } from "./helpers/helper_functions";
+import { AutocompleteData, NS } from '@ns';
 
-/** @param {import("@ns").NS} ns */
-export async function main(ns) {
-    const attack_server = ns.getHostname();
-    const target_host = ns.args[0];
+export async function main(ns: NS) {
+    const attack_server = <string>ns.getHostname();
+    const target_host = <string>ns.args[0];
   
     if(!target_host) {
       ns.tprint("No target server please input valid server!");
@@ -30,7 +30,7 @@ export async function main(ns) {
       ns.tprint("Root Access already aquired continuing!");
     }
 
-    let server_ram = ns.getServerMaxRam(attack_server);
+    const server_ram = ns.getServerMaxRam(attack_server);
     let script_ram = ns.getScriptRam("initial.js");
     if(script_ram >= server_ram) {
       script_ram = ns.getScriptRam("local_hacking_initial.js");
@@ -54,6 +54,6 @@ export async function main(ns) {
   }
 
   //autocomplete for server 
-  export function autocomplete(data) {
+  export function autocomplete(data: AutocompleteData) {
     return data.servers;
 }

@@ -1,11 +1,11 @@
 import { break_ports, delete_smallest_server, scp_helper } from "./helpers/helper_functions";
 import { HOME_SERVER } from "./helpers/helper_vars";
+import { AutocompleteData, NS } from '@ns';
 
-/** @param {import("@ns").NS} ns */
-export async function main(ns) {
-    let attack_memory;
+export async function main(ns:NS) {
+    let attack_memory = 0;
 
-    const target_host = ns.args[0];
+    const target_host = <string>ns.args[0];
     const server_cost_array = get_server_cost(ns);
     const prompt_array = format_dropdown_choices(ns, server_cost_array);
 
@@ -33,7 +33,7 @@ export async function main(ns) {
     } else {
       ns.tprint("Root Access already aquired continuing!");
     }
-      let choice = prompt_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: prompt_array}));
+      const choice = prompt_array.indexOf(await ns.prompt("Select Ram for Server.", {type : "select", choices: prompt_array}));
       attack_memory = 2**(choice+1);
       if(choice == -1) {
         ns.exit();
@@ -78,19 +78,16 @@ export async function main(ns) {
   }
 
 
-/** @param {import("@ns").NS} ns */
-function get_server_cost(ns) {
-    let cost_array = Array(20);
+function get_server_cost(ns: NS) {
+    const cost_array = Array(20);
     for(let index = 0; index < 20; index++) {
       cost_array[index] = ns.getPurchasedServerCost(2**(index+1));
       }
     return cost_array;
   }
 
-
-/** @param {import("@ns").NS} ns */
-function format_dropdown_choices(ns, cost_array) {
-    let prompt_array = Array(20);
+function format_dropdown_choices(ns :NS, cost_array: Array<number>) {
+    const prompt_array = Array(20);
     for(let index = 0; index < 20; index++) {
       if(ns.getServerMoneyAvailable(HOME_SERVER)  >= cost_array[index]) {
         prompt_array[index] = `${index + 1} Server Cost for ${ns.formatRam(2**(index+1))} is ${ns.formatNumber(cost_array[index])}`;
@@ -103,6 +100,6 @@ function format_dropdown_choices(ns, cost_array) {
   }
 
 //autocomplete for server 
-  export function autocomplete(data) {
+  export function autocomplete(data: AutocompleteData) {
       return data.servers;
   }
